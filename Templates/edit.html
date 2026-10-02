@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Edit Environmental Aspect</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #1f4d3a;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        button,
+        a {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 5px;
+            border: none;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button {
+            background: #1f4d3a;
+            color: white;
+        }
+
+        .cancel {
+            background: #777;
+            color: white;
+            margin-left: 8px;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .container {
+                margin: 20px auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Edit Environmental Aspect
+        </h1>
+
+
+        <form method="POST">
+
+
+            <div class="form-group">
+
+                <label>
+                    Activity
+                </label>
+
+                <input
+                    type="text"
+                    name="activity"
+                    value="{{ item.activity }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Environmental Aspect
+                </label>
+
+                <input
+                    type="text"
+                    name="aspect"
+                    value="{{ item.aspect }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Environmental Impact
+                </label>
+
+                <input
+                    type="text"
+                    name="impact"
+                    value="{{ item.impact }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Condition
+                </label>
+
+                <select name="condition">
+
+                    <option value="Normal"
+                        {% if item.condition == "Normal" %}
+                        selected
+                        {% endif %}>
+                        Normal
+                    </option>
+
+                    <option value="Abnormal"
+                        {% if item.condition == "Abnormal" %}
+                        selected
+                        {% endif %}>
+                        Abnormal
+                    </option>
+
+                    <option value="Emergency"
+                        {% if item.condition == "Emergency" %}
+                        selected
+                        {% endif %}>
+                        Emergency
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Severity
+                </label>
+
+                <select name="severity">
+
+                    {% for value in range(1, 6) %}
+
+                    <option value="{{ value }}"
+                        {% if item.severity == value %}
+                        selected
+                        {% endif %}>
+
+                        {{ value }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Likelihood
+                </label>
+
+                <select name="likelihood">
+
+                    {% for value in range(1, 6) %}
+
+                    <option value="{{ value }}"
+                        {% if item.likelihood == value %}
+                        selected
+                        {% endif %}>
+
+                        {{ value }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <button type="submit">
+                Save Changes
+            </button>
+
+
+            <a
+                href="{{ url_for('register') }}"
+                class="cancel"
+            >
+                Cancel
+            </a>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

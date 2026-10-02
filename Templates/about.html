@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>About - Environmental Register Generator</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f7;
+            color: #333;
+        }
+
+        nav {
+            background: #1f4d3a;
+            padding: 18px 5%;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+        }
+
+        h1,
+        h2 {
+            color: #1f4d3a;
+        }
+
+        p {
+            line-height: 1.7;
+        }
+
+        @media (max-width: 700px) {
+
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <a href="{{ url_for('landing') }}">
+        Home
+    </a>
+
+    <a href="{{ url_for('register') }}">
+        Create Register
+    </a>
+
+    <a href="{{ url_for('privacy') }}">
+        Privacy Policy
+    </a>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        About Environmental Register Generator
+    </h1>
+
+
+    <p>
+
+        Environmental Register Generator is a simple web-based
+        tool designed to help environmental professionals
+        structure environmental aspect and impact assessments.
+
+    </p>
+
+
+    <h2>
+        What can it do?
+    </h2>
+
+
+    <p>
+
+        Users can enter project information, identify environmental
+        aspects and impacts, evaluate severity and likelihood,
+        automatically calculate risk scores, and export the
+        completed register to Excel.
+
+    </p>
+
+
+    <h2>
+        Free Version
+    </h2>
+
+
+    <p>
+
+        The free version currently allows users to create a
+        register containing up to five environmental aspects.
+
+    </p>
+
+
+    <h2>
+        Intended Use
+    </h2>
+
+
+    <p>
+
+        This tool is intended to assist with environmental
+        assessment and documentation. Users should apply their
+        organization's own environmental assessment methodology,
+        legal requirements, and professional judgment when
+        evaluating environmental aspects and impacts.
+
+    </p>
+
+</div>
+
+
+</body>
+
+</html>

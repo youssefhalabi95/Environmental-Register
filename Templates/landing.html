@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Environmental Register Generator</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f7;
+            color: #333;
+        }
+
+        nav {
+            background: #1f4d3a;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .hero {
+            max-width: 1000px;
+            margin: auto;
+            padding: 90px 25px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            color: #1f4d3a;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 25px;
+            background: #1f4d3a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 17px;
+        }
+
+        .features {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px 25px 80px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .feature h3 {
+            color: #1f4d3a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <a href="{{ url_for('landing') }}"
+       class="logo">
+
+        Environmental Register Generator
+
+    </a>
+
+
+    <div>
+
+        <a href="{{ url_for('about') }}">
+            About
+        </a>
+
+        <a href="{{ url_for('privacy') }}">
+            Privacy
+        </a>
+
+        <a href="{{ url_for('register') }}">
+            Create Register
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <h1>
+        Environmental Register Generator
+    </h1>
+
+    <p>
+
+        Create a structured environmental aspect and
+        impact register in minutes and export it
+        directly to Excel.
+
+    </p>
+
+
+    <a
+        href="{{ url_for('register') }}"
+        class="button"
+    >
+        Create Your Free Register
+    </a>
+
+</section>
+
+
+<section class="features">
+
+
+    <div class="feature">
+
+        <h3>
+            Project Information
+        </h3>
+
+        <p>
+            Record your project name, client,
+            location, project type and assessment details.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <h3>
+            Risk Assessment
+        </h3>
+
+        <p>
+            Enter severity and likelihood and
+            automatically calculate the risk score.
+        </p>
+
+    </div>
+
+
+    <div class="feature">
+
+        <h3>
+            Excel Export
+        </h3>
+
+        <p>
+            Download your completed environmental
+            register as an Excel file.
+        </p>
+
+    </div>
+
+
+</section>
+
+
+<footer>
+
+    <a href="{{ url_for('about') }}">
+        About
+    </a>
+
+    &nbsp; | &nbsp;
+
+    <a href="{{ url_for('privacy') }}">
+        Privacy Policy
+    </a>
+
+    <br><br>
+
+    Environmental Register Generator
+
+</footer>
+
+
+</body>
+
+</html>

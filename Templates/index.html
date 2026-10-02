@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Environmental Register Generator</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f7;
+            color: #333;
+        }
+
+
+        /* NAVIGATION */
+
+        nav {
+            background: #1f4d3a;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+
+        /* MAIN CONTAINER */
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+
+        /* CARDS */
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+
+        h1,
+        h2 {
+            color: #1f4d3a;
+        }
+
+
+        /* FORMS */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .full-width {
+            grid-column: 1 / 3;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+
+        /* BUTTONS */
+
+        button,
+        .button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .primary {
+            background: #1f4d3a;
+            color: white;
+        }
+
+        .export {
+            background: #2f6f44;
+            color: white;
+        }
+
+        .delete {
+            background: #b33a3a;
+            color: white;
+        }
+
+        .edit {
+            background: #777;
+            color: white;
+        }
+
+
+        /* PROJECT SUMMARY */
+
+        .project-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .project-item {
+            background: #f4f6f7;
+            padding: 12px;
+            border-radius: 5px;
+        }
+
+        .project-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+
+        /* TABLE */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 950px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #1f4d3a;
+            color: white;
+        }
+
+
+        /* RISK LEVELS */
+
+        .low {
+            background: #d9ead3;
+        }
+
+        .medium {
+            background: #fff2cc;
+        }
+
+        .high {
+            background: #fce5cd;
+        }
+
+        .critical {
+            background: #f4cccc;
+            font-weight: bold;
+        }
+
+
+        /* MESSAGES */
+
+        .message {
+            background: #fff2cc;
+            border: 1px solid #e6c84f;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .limit {
+            color: #666;
+        }
+
+
+        /* ACTIONS */
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: 1;
+            }
+
+            .project-info {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions a {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <a
+        href="{{ url_for('landing') }}"
+        class="logo"
+    >
+        Environmental Register Generator
+    </a>
+
+
+    <div>
+
+        <a href="{{ url_for('about') }}">
+            About
+        </a>
+
+        <a href="{{ url_for('privacy') }}">
+            Privacy
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    {% if message %}
+
+    <div class="message">
+
+        {{ message }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- PROJECT INFORMATION -->
+
+    <div class="card">
+
+        <h2>
+            1. Project Information
+        </h2>
+
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="form_type"
+                value="project"
+            >
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Project Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="project_name"
+                        value="{{ project.get('name', '') }}"
+                        placeholder="e.g. Solar Power Plant"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Client
+                    </label>
+
+                    <input
+                        type="text"
+                        name="client"
+                        value="{{ project.get('client', '') }}"
+                        placeholder="e.g. ABC Energy"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Project Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        value="{{ project.get('location', '') }}"
+                        placeholder="e.g. Aswan, Egypt"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Project Type
+                    </label>
+
+                    <input
+                        type="text"
+                        name="project_type"
+                        value="{{ project.get('type', '') }}"
+                        placeholder="e.g. Solar PV Project"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Prepared By
+                    </label>
+
+                    <input
+                        type="text"
+                        name="prepared_by"
+                        value="{{ project.get('prepared_by', '') }}"
+                        placeholder="Your name"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Assessment Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="assessment_date"
+                        value="{{ project.get('date', '') }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="full-width">
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Save Project Information
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- PROJECT SUMMARY -->
+
+    {% if project %}
+
+    <div class="card">
+
+        <h2>
+            Project Summary
+        </h2>
+
+
+        <div class="project-info">
+
+
+            <div class="project-item">
+
+                <strong>
+                    Project
+                </strong>
+
+                {{ project.get('name') }}
+
+            </div>
+
+
+            <div class="project-item">
+
+                <strong>
+                    Client
+                </strong>
+
+                {{ project.get('client') }}
+
+            </div>
+
+
+            <div class="project-item">
+
+                <strong>
+                    Location
+                </strong>
+
+                {{ project.get('location') }}
+
+            </div>
+
+
+            <div class="project-item">
+
+                <strong>
+                    Project Type
+                </strong>
+
+                {{ project.get('type') }}
+
+            </div>
+
+
+            <div class="project-item">
+
+                <strong>
+                    Prepared By
+                </strong>
+
+                {{ project.get('prepared_by') }}
+
+            </div>
+
+
+            <div class="project-item">
+
+                <strong>
+                    Assessment Date
+                </strong>
+
+                {{ project.get('date') }}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ADD ASPECT -->
+
+    <div class="card">
+
+        <h2>
+            2. Environmental Aspects
+        </h2>
+
+
+        <p class="limit">
+
+            Free version:
+            <strong>
+                {{ register|length }} / {{ max_aspects }}
+            </strong>
+            aspects used.
+
+        </p>
+
+
+        {% if register|length < max_aspects %}
+
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="form_type"
+                value="aspect"
+            >
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Activity
+                    </label>
+
+                    <input
+                        type="text"
+                        name="activity"
+                        placeholder="e.g. Diesel storage"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Environmental Aspect
+                    </label>
+
+                    <input
+                        type="text"
+                        name="aspect"
+                        placeholder="e.g. Potential fuel leakage"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Environmental Impact
+                    </label>
+
+                    <input
+                        type="text"
+                        name="impact"
+                        placeholder="e.g. Soil contamination"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Condition
+                    </label>
+
+                    <select name="condition">
+
+                        <option value="Normal">
+                            Normal
+                        </option>
+
+                        <option value="Abnormal">
+                            Abnormal
+                        </option>
+
+                        <option value="Emergency">
+                            Emergency
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Severity
+                    </label>
+
+                    <select name="severity">
+
+                        <option value="1">
+                            1 - Very Low
+                        </option>
+
+                        <option value="2">
+                            2 - Low
+                        </option>
+
+                        <option value="3">
+                            3 - Moderate
+                        </option>
+
+                        <option value="4">
+                            4 - High
+                        </option>
+
+                        <option value="5">
+                            5 - Very High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Likelihood
+                    </label>
+
+                    <select name="likelihood">
+
+                        <option value="1">
+                            1 - Very Unlikely
+                        </option>
+
+                        <option value="2">
+                            2 - Unlikely
+                        </option>
+
+                        <option value="3">
+                            3 - Possible
+                        </option>
+
+                        <option value="4">
+                            4 - Likely
+                        </option>
+
+                        <option value="5">
+                            5 - Very Likely
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="full-width">
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Add Environmental Aspect
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+
+        {% else %}
+
+
+        <div class="message">
+
+            You have reached the free version limit of
+            {{ max_aspects }} aspects.
+
+        </div>
+
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- REGISTER -->
+
+    <div class="card">
+
+        <h2>
+            3. Environmental Register
+        </h2>
+
+
+        {% if register %}
+
+
+        <div class="table-container">
+
+            <table>
+
+                <tr>
+
+                    <th>#</th>
+                    <th>Activity</th>
+                    <th>Aspect</th>
+                    <th>Impact</th>
+                    <th>Condition</th>
+                    <th>Severity</th>
+                    <th>Likelihood</th>
+                    <th>Score</th>
+                    <th>Risk Level</th>
+                    <th>Actions</th>
+
+                </tr>
+
+
+                {% for item in register %}
+
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        {{ item.activity }}
+                    </td>
+
+                    <td>
+                        {{ item.aspect }}
+                    </td>
+
+                    <td>
+                        {{ item.impact }}
+                    </td>
+
+                    <td>
+                        {{ item.condition }}
+                    </td>
+
+                    <td>
+                        {{ item.severity }}
+                    </td>
+
+                    <td>
+                        {{ item.likelihood }}
+                    </td>
+
+                    <td>
+                        {{ item.score }}
+                    </td>
+
+                    <td class="{{ item.level.lower() }}">
+
+                        {{ item.level }}
+
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="{{ url_for('edit', index=loop.index0) }}"
+                            class="button edit"
+                        >
+                            Edit
+                        </a>
+
+                        <a
+                            href="{{ url_for('delete', index=loop.index0) }}"
+                            class="button delete"
+                            onclick="return confirm('Delete this aspect?');"
+                        >
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </table>
+
+        </div>
+
+
+        <div class="actions">
+
+
+            <a
+                href="{{ url_for('export_excel') }}"
+                class="button export"
+            >
+                Export to Excel
+            </a>
+
+
+            <a
+                href="{{ url_for('clear') }}"
+                class="button delete"
+                onclick="return confirm('Start a new register? This will delete the current project and all aspects.');"
+            >
+                Start New Register
+            </a>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <p>
+            No environmental aspects have been added yet.
+        </p>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
